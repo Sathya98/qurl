@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "qurl"
+version = "0.1.0"
+description = "Reinforcement Learning with Complex (valued) Memories: unitary recurrent memories (uRNN, ICuRNN, EUNN) and Born-rule policies for partially observable RL in JAX."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Sathya Kamesh Bhethanabhotla", email = "s.k.bhethanabhotla@uva.nl" },
+    { name = "Efstratios Gavves" },
+    { name = "André Biedenkapp", email = "biedenkapp@kit.edu" },
+]
+dependencies = [
+    "jax==0.6.2",
+    "flax==0.10.7",
+    "optax==0.2.8",
+    "distrax==0.1.5",
+    "chex==0.1.90",
+    "orbax-checkpoint==0.11.34",
+    "gymnax==0.0.9",
+    "brax==0.14.1",
+    "mujoco==3.6.0",
+    "mujoco-mjx==3.6.0",
+    "jumanji==1.1.1",
+    "gymnasium==1.2.3",
+    "navix @ git+https://github.com/taodav/navix@6f8bf656dfc3b4bf3aeba24ad8a3914047fcd7d6",
+    "typed-argument-parser==1.12.0",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+    "scipy",
+]
+
+[project.optional-dependencies]
+cuda = ["jax[cuda12]==0.6.2"]
+craftax = ["craftax==1.5.0"]
+dev = ["pytest"]
+
+[project.urls]
+POBax = "https://github.com/taodav/pobax"
+
+[tool.hatch.metadata]
+allow-direct-references = true  # navix is a git dependency
+
+[tool.hatch.build.targets.wheel]
+packages = ["qurl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

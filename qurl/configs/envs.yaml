@@ -1,0 +1,44 @@
+# Settings shared by every method, from Appendix E of the paper.
+# Table 1 -> defaults + rollout_length, Table 2 -> envs rows,
+# Table 3 -> envs rows (GRU columns) and ppo_ld rows (PPO-LD columns).
+# Tuned settings for the unitary methods live in best/<method>_<env>.yaml.
+# Rows marked "not in the paper" keep POBax's settings for convenience.
+defaults:
+  seed: 2026
+  n_seeds: 5
+  vf_coeff: 0.5
+  complex_lr: 8.0e-5
+  action_concat: true
+  platform: gpu
+
+# PPO rollout length T by method group; an env row's num_steps overrides both.
+rollout_length:
+  baseline: 128   # gru, ppo_ld
+  unitary: 256    # urnn, icurnn, eunn_<L> and their Born-rule (q-) variants
+
+envs:
+  tmaze_75:               {hidden_size: 32,  num_envs: 4,   lr: 2.5e-3, lambda0: 0.7,  entropy_coeff: 0.01, total_steps: 5000000}
+  rocksample_11_11:       {hidden_size: 256, num_envs: 8,   lr: 2.5e-3, lambda0: 0.7,  entropy_coeff: 0.2,  total_steps: 5000000}
+  rocksample_15_15:       {hidden_size: 512, num_envs: 16,  lr: 2.5e-3, lambda0: 0.7,  entropy_coeff: 0.2,  total_steps: 10000000}
+  battleship_10:          {hidden_size: 512, num_envs: 32,  lr: 2.5e-3, lambda0: 0.7,  entropy_coeff: 0.05, total_steps: 10000000}
+  Walker-V-v0:            {hidden_size: 256, num_envs: 4,   lr: 2.5e-4, lambda0: 0.95, entropy_coeff: 0.01, total_steps: 50000000}
+  HalfCheetah-V-v0:       {hidden_size: 256, num_envs: 4,   lr: 2.5e-4, lambda0: 0.9,  entropy_coeff: 0.01, total_steps: 50000000}
+  craftax_pixels:         {hidden_size: 512, num_envs: 256, num_steps: 64, lr: 2.5e-4, lambda0: 0.5, entropy_coeff: 0.01, total_steps: 100000000, steps_log_freq: 16, update_log_freq: 16}
+  # not in the paper
+  tmaze_10:               {hidden_size: 32,  num_envs: 4,   lr: 2.5e-3, lambda0: 0.7,  entropy_coeff: 0.01, total_steps: 5000000}
+  Navix-DMLab-Maze-01-v0: {hidden_size: 512, num_envs: 256, lr: 2.5e-4, lambda0: 0.9,  entropy_coeff: 0.01, total_steps: 10000000}
+  craftax:                {hidden_size: 512, num_envs: 256, num_steps: 64, lr: 2.5e-4, lambda0: 0.5, entropy_coeff: 0.01, total_steps: 100000000, steps_log_freq: 16, update_log_freq: 16}
+
+# PPO-LD (lambda-discrepancy) overrides; method ppo_ld also sets double_critic.
+ppo_ld:
+  tmaze_75:               {lr: 2.5e-4, lambda0: 0.95, lambda1: 0.95, ld_weight: 0.25}
+  rocksample_11_11:       {lr: 2.5e-3, lambda0: 0.5,  lambda1: 0.5,  ld_weight: 0.25}
+  rocksample_15_15:       {lr: 2.5e-3, lambda0: 0.1,  lambda1: 0.95, ld_weight: 0.5}
+  battleship_10:          {lr: 2.5e-3, lambda0: 0.1,  lambda1: 0.95, ld_weight: 0.5}
+  Walker-V-v0:            {lr: 2.5e-4, lambda0: 0.95, lambda1: 0.95, ld_weight: 0.5}
+  HalfCheetah-V-v0:       {lr: 2.5e-5, lambda0: 0.95, lambda1: 0.7,  ld_weight: 0.25}
+  craftax_pixels:         {lr: 2.5e-4, lambda0: 0.1,  lambda1: 0.95, ld_weight: 0.25}
+  # not in the paper
+  tmaze_10:               {lr: 2.5e-4, lambda0: 0.95, lambda1: 0.95, ld_weight: 0.25}
+  Navix-DMLab-Maze-01-v0: {lr: 2.5e-4, lambda0: 0.95, lambda1: 0.5,  ld_weight: 0.25}
+  craftax:                {lr: 2.5e-4, lambda0: 0.1,  lambda1: 0.95, ld_weight: 0.25}

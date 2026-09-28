@@ -1,0 +1,6 @@
+# EUNN (L=2) on rocksample_15_15: tuned by grid sweep, Appendix E Table 6 of the paper.
+complex_lr: 1.0e-06
+entropy_coeff: 0.1
+lambda0: 0.7
+lr: 0.0025
+vf_coeff: 0.5

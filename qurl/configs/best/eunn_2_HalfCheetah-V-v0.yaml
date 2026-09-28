@@ -1,0 +1,6 @@
+# EUNN (L=2) on HalfCheetah-V-v0: tuned by grid sweep, Appendix E Table 9 of the paper.
+complex_lr: 1.0e-06
+entropy_coeff: 0.005
+lambda0: 0.9
+lr: 0.00025
+vf_coeff: 0.5
